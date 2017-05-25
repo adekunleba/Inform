@@ -27,7 +27,7 @@ class PremiseForm(FlaskForm):
 class PatientForm(FlaskForm):
     patientName = StringField('Patient Name', validators=[DataRequired(), Length(1, 64)])
     patientID = IntegerField('PatientID')
-    patientAge = StringField('Parient Age')
+    patientAge = StringField('Patient Age')
     patientState = StringField('State')
     patientLGA = StringField('LGA')
     submit = SubmitField('Add Patient')

@@ -6,9 +6,8 @@ from .. import db
 from flask_login import current_user, login_user
 
 
-@main.route('/')
-@main.route('/index', methods=['GET', 'POST'])
-def index():
+@main.route('/drugs', methods=['GET', 'POST'])
+def drugs():
     drug_form = Drug()
     premise = Premise.query.filter_by(user_id=current_user.id).order_by('-id').first()
     if drug_form.validate_on_submit():
@@ -23,7 +22,7 @@ def index():
         drug.patient_id = patient.id
         db.session.add(drug)
         db.session.commit()
-        return redirect(url_for('.index'))
+        return redirect(url_for('.drugs'))
     return render_template("drug.html", drug_form=drug_form)
 
 
@@ -55,7 +54,7 @@ def patient():
                           premise_id=premise.id)
         db.session.add(patient)
         db.session.commit()
-        return redirect(url_for('.index'))
+        return redirect(url_for('.drugs'))
     return render_template('patient.html', form=form)
 
 
@@ -69,6 +68,7 @@ def login():
     return render_template("login.html", form=form)
 
 
+@main.route('/')
 @main.route('/register', methods=['GET', 'POST'])
 def register():
     form = Register()
