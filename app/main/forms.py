@@ -1,19 +1,36 @@
-from app import db
 from flask_wtf import FlaskForm
-from wtforms import FieldList, FormField, StringField, SelectField, IntegerField, SubmitField
-from wtforms.validators import DataRequired, Length
+from wtforms import FieldList, FormField, StringField, SelectField, IntegerField, SubmitField, PasswordField, BooleanField
+from wtforms.validators import DataRequired, Length, Email
+
+
+class Register(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Length(1, 64), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    remember_me = BooleanField('Keep me logged in')
+    submit = SubmitField('Register')
+
+
+class LoginForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Length(1, 64), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Log In')
 
 
 class PremiseForm(FlaskForm):
     name = StringField('Premise Name', validators=[DataRequired(), Length(1, 64)])
-    address = StringField('Address', validators=[DataRequired()])
+    state = StringField('State', validators=[DataRequired()])
+    town = StringField('Town', validators=[DataRequired()])
+    lga = StringField('Local', validators=[DataRequired()])
     submit = SubmitField('Register')
+
 
 class PatientForm(FlaskForm):
     patientName = StringField('Patient Name', validators=[DataRequired(), Length(1, 64)])
     patientID = IntegerField('PatientID')
-    patientState = SelectField('State', choices=[('Uyo', 'Uyo'), ('Delta', 'Asaba')])
-    patientLGA = SelectField('LGA', choices=[('Uyo', 'Uyo'), ('Abak', 'Abak')])
+    patientAge = StringField('Parient Age')
+    patientState = StringField('State')
+    patientLGA = StringField('LGA')
+    submit = SubmitField('Add Patient')
 
 
 class Drug(FlaskForm):
@@ -27,4 +44,4 @@ class Drug(FlaskForm):
 
 # class GroupedForm(FlaskForm):
 #     """A form for one or more addresses"""
-#     drugs = FormField(Drug)
+#     drugs = FieldList(FormField(Drug), max_entries=3)

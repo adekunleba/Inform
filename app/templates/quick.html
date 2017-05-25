@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Informare - Register Premise{% endblock %}
+
+{% block page_content %}
+<div>
+<form class="form form-horizontal" method="post">
+    {{ form.hidden_tag() }}
+    {{ form.drugs() }}
+</form>
+    </div>
+{% endblock %}
